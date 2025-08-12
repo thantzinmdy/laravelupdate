@@ -1,0 +1,17 @@
+{
+    "name": "BlogCategory",
+    "alias": "blogcategory",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 10,
+    "group": 1,
+    "providers": [
+        "Modules\\BlogCategory\\Providers\\BlogCategoryServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        "start.php"
+    ],
+    "requires": []
+}

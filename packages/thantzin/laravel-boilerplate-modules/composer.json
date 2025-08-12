@@ -1,0 +1,48 @@
+{
+  "name": "thantzin/laravel-boilerplate-modules",
+  "description": "Laravel Module management",
+  "keywords": [
+    "modules",
+    "laravel",
+    "thantzin",
+    "module",
+    "rad"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Thant Zin",
+      "email": "thantzin18596@gmail.com",
+      "homepage": "https://thantzin.github.io",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=7.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "Thantzin\\Modules\\": "src"
+    },
+    "files": [
+      "src/helpers.php"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Thantzin\\Modules\\Tests\\": "tests",
+      "Modules\\Recipe\\": "tests/stubs/valid/Recipe"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Thantzin\\Modules\\LaravelModulesServiceProvider"
+      ],
+      "aliases": {
+        "Module": "Thantzin\\Modules\\Facades\\Module"
+      }
+    }
+  },
+  "minimum-stability": "stable"
+}

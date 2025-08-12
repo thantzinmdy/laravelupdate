@@ -1,0 +1,25 @@
+{
+    "name": "Thantzin/blogcategory",
+    "description": "",
+    "authors": [
+        {
+            "name": "Thant Zin",
+            "email": "thantzin18596@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\BlogCategory\\Providers\\BlogCategoryServiceProvider"
+            ],
+            "aliases": {
+                
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\BlogCategory\\": ""
+        }
+    }
+}

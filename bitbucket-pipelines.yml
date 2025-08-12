@@ -1,0 +1,33 @@
+# This is a sample build configuration for PHP.
+# Check our guides at https://confluence.atlassian.com/x/e8YWN for more examples.
+# Only use spaces to indent your .yml configuration.
+# -----
+# You can specify a custom docker image from Docker Hub as your build environment.
+
+pipelines:
+
+  branches:
+
+    master:
+      - step:
+          name: Build and test
+          image: zawmyolatt/php-mariadb
+          caches:
+            - composer
+          script:
+          - service mysql start
+          - mysql -e "SET global max_connections = 600; DROP DATABASE IF EXISTS laravel_test; CREATE DATABASE laravel_test; SET PASSWORD FOR 'root'@'localhost' = PASSWORD('root'); UPDATE mysql.user SET plugin = '' WHERE user = 'root' AND host = 'localhost'; FLUSH PRIVILEGES;"
+          - ln -f -s .env.testing .env
+          - composer install
+          - composer dump-autoload
+          - php artisan optimize
+          - php artisan migrate --seed
+          - php artisan passport:install
+          - vendor/bin/phpunit -c ./phpunit.xml -d memory_limit=2048M --log-junit ./test-reports/junit.xml --exclude-group Stress
+      - step:
+          name: Deploy to production
+          image: atlassian/default-image:latest
+          deployment: production
+          script:
+          # Call deploy to production.
+          - cat ./deployment/master.sh | ssh -T $user@$host sh

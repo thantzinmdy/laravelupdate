@@ -1,0 +1,25 @@
+{
+    "name": "Thantzin/appsetting",
+    "description": "",
+    "authors": [
+        {
+            "name": "Thant Zin",
+            "email": "Thantzin188596@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\AppSetting\\Providers\\AppSettingServiceProvider"
+            ],
+            "aliases": {
+                
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\AppSetting\\": ""
+        }
+    }
+}

@@ -1,0 +1,19 @@
+{
+    "name": "thantzin-phone/phone-number-php",
+    "description": "Check valid mobile numbers, get mobile operator's name, sanitize mobile numbers and get mobile network types.",
+    "type": "library",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "PHONE",
+            "email": "thantzin18596@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "PHONE\\": "src/PHONE/"
+        }
+    },
+    "minimum-stability": "dev",
+    "require": {}
+}
