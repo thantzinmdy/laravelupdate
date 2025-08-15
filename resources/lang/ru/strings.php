@@ -32,7 +32,7 @@ return [
         'general' => [
             'all_rights_reserved' => 'Все права защищены.',
             'are_you_sure' => 'Вы уверены?',
-            'app_link' => 'BNF Bus V2',
+            'boilerplate_link' => 'Laravel Boilerplate',
             'continue' => 'Продолжить',
             'member_since' => 'Пользователь с',
             'minutes' => 'минут',

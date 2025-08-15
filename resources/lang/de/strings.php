@@ -31,7 +31,7 @@ return [
         'general' => [
             'all_rights_reserved' => 'Alle Rechte vorbehalten.',
             'are_you_sure' => 'Bist du dir sicher?',
-            'app_link' => 'BNF Bus V2',
+            'boilerplate_link' => 'Laravel Boilerplate',
             'continue' => 'Fortsetzen',
             'member_since' => 'Mitglied seit',
             'minutes' => ' Minuten',

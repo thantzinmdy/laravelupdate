@@ -25,7 +25,6 @@ return [
             'confirmed' => 'The user was successfully confirmed.',
             'created' => 'The user was successfully created.',
             'deleted' => 'The user was successfully deleted.',
-            'not_deleted' => 'The user was successfully not deleted.It is used in customer table.',
             'deleted_permanently' => 'The user was deleted permanently.',
             'restored' => 'The user was successfully restored.',
             'session_cleared' => "The user's session was successfully cleared.",

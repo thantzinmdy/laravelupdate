@@ -9,44 +9,45 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^7.2",
+        "php": "^7.3|^8.1",
         "albertcht/invisible-recaptcha": "^1.9",
-        "altek/accountant": "^1.2",
-        "altek/eventually": "^1.0",
-        "arcanedev/log-viewer": "^5.0",
+        "altek/accountant": "^3.0",
+        "altek/eventually": "^2.0",
+        "arcanedev/log-viewer": "^8.3",
         "creativeorange/gravatar": "~1.0",
-        "cviebrock/eloquent-sluggable": "6.x-dev",
+        "cviebrock/eloquent-sluggable": "^8.0",
         "davejamesmiller/laravel-breadcrumbs": "^5.0",
-        "fideloper/proxy": "^4.0",
+        "fideloper/proxy": "^4.3",
         "jenssegers/agent": "^3.0@dev",
         "lab404/laravel-impersonate": "^1.4",
         "langleyfoxall/laravel-nist-password-rules": "^4.0",
-        "laravel/framework": "^6.0",
-        "laravel/socialite": "^4.1",
-        "roave/security-advisories": "dev-master",
+        "laravel/framework": "^8.0",
+        "laravel/socialite": "^5.1",
+        "laravel/ui": "3.2",
         "spatie/laravel-html": "^2.22",
         "spatie/laravel-permission": "^3.0",
-        "squareboat/sneaker": "^5.0",
-        "torann/geoip": "^1.0",
-        "webpatser/laravel-uuid": "^3.0",
+        "torann/geoip": "^3.0",
+        "webpatser/laravel-uuid": "^4.0",
         "yajra/laravel-datatables-oracle": "~9.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",
         "barryvdh/laravel-ide-helper": "^2.6",
-        "codedungeon/phpunit-result-printer": "^0.26.1",
-        "facade/ignition": "^1.4",
+        "facade/ignition": "^2.5",
         "friendsofphp/php-cs-fixer": "^2.14",
         "fzaninotto/faker": "^1.4",
         "mockery/mockery": "^1.0",
-        "nunomaduro/collision": "^3.0",
+        "nunomaduro/collision": "^5.0",
         "phpunit/phpunit": "^8.0",
         "thantzin/laravel-boilerplate-modules": "*"
     },
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
     },
     "autoload": {
         "classmap": [

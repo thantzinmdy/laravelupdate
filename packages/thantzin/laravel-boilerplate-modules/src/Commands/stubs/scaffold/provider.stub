@@ -101,7 +101,10 @@ class $CLASS$ extends ServiceProvider
     public function registerFactories()
     {
         if (! app()->environment('production')) {
-            app(Factory::class)->load(__DIR__ . '/../$FACTORIES_PATH$');
+            // app(Factory::class)->load(__DIR__ . '/../$FACTORIES_PATH$');
+            $this->app->singleton(Factory::class, function ($app) {
+                return Factory::construct($app['faker'], database_path('factories'));
+            });
         }
     }
 

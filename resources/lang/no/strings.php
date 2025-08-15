@@ -29,7 +29,7 @@ return [
         'general' => [
             'all_rights_reserved' => 'Alle rettigheter forbeholdes.',
             'are_you_sure' => 'Er du sikker?',
-            'app_link' => 'BNF Bus V2',
+            'boilerplate_link' => 'Laravel Boilerplate',
             'continue' => 'Fortsett',
             'member_since' => 'Medlem siden',
             'minutes' => ' minutter',
