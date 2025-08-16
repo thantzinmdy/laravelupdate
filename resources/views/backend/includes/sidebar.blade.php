@@ -83,6 +83,30 @@
                     </ul>
                 </li>
             @endif
+            <li class="divider"></li>
+
+            <li class="nav-title">
+                Feature
+            </li>
+            
+            @foreach(Module::group(1) as $module)
+                @if($module->enabled())
+                    <?php 
+                        $module = $module->getLowerName();
+                        $route = 'admin.'.$module.'.index';
+                        $active = 'admin/'.$module.'*';
+                        $mod_trans = $module.'::menus.backend.sidebar.'.$module;
+                    ?>
+                    @can('manage '.$module)
+                        <li class="nav-item">
+                            <a class="nav-link {{ active_class(Route::is($active)) }}" href="{{ route($route) }}">
+                                <i class="{{ config($module.'.icon') }}"></i>
+                                <span>{{ trans($mod_trans) }}</span>
+                            </a>
+                        </li>
+                    @endcan
+                @endif
+            @endforeach
         </ul>
     </nav>
 

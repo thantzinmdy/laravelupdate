@@ -3,7 +3,7 @@
     "alias": "blogcategory",
     "description": "",
     "keywords": [],
-    "active": 1,
+    "active": 0,
     "order": 10,
     "group": 1,
     "providers": [
