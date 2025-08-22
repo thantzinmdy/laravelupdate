@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Spatie\Permission\Exceptions\UnauthorizedException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Throwable;
 
 /**
  * Class Handler.
@@ -39,7 +40,7 @@ class Handler extends ExceptionHandler
      * @throws Exception
      * @return mixed|void
      */
-    public function report(Exception $exception)
+    public function report(Throwable  $exception)
     {
         if (!config('app.debug') && $this->shouldReport($exception)) {
             app('sneaker')->captureException($exception);
@@ -55,7 +56,7 @@ class Handler extends ExceptionHandler
      * @param  \Exception  $exception
      * @return \Illuminate\Http\Response
      */
-    public function render($request, Exception $exception)
+    public function render($request, Throwable  $exception)
     {
         if ($exception instanceof UnauthorizedException) {
             return redirect()

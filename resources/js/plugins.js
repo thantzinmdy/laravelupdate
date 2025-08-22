@@ -22,7 +22,10 @@ function addDeleteForms() {
         .attr('onclick', '$(this).find("form").submit();');
 }
 
-function load_plugins(){
+/**
+ * Place any jQuery/helper plugins in here.
+ */
+$(function () {
     /**
      * Add the data-method="delete" forms to all delete links
      */
@@ -54,7 +57,7 @@ function load_plugins(){
             showCancelButton: true,
             confirmButtonText: confirm,
             cancelButtonText: cancel,
-            type: 'warning'
+            icon: 'warning'
         }).then((result) => {
             result.value && form.submit();
         });
@@ -74,18 +77,11 @@ function load_plugins(){
             showCancelButton: true,
             confirmButtonText: confirm,
             cancelButtonText: cancel,
-            type: 'info'
+            icon: 'info'
         }).then((result) => {
             result.value && window.location.assign(link.attr('href'));
         });
     });
 
     $('[data-toggle="tooltip"]').tooltip();
-}
-
-/**
- * Place any jQuery/helper plugins in here.
- */
-$(function(){
-    load_plugins();
 });

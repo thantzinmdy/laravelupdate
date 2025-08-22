@@ -29,7 +29,7 @@ return [
         'general' => [
             'all_rights_reserved' => 'Hak Cipta Dilindungi.',
             'are_you_sure' => 'Anda yakin?',
-            'app_link' => 'BNF Bus V2',
+            'boilerplate_link' => 'Laravel Boilerplate',
             'continue' => 'Lanjutjan',
             'member_since' => 'Anggota sejak',
             'minutes' => ' menit',

@@ -30,7 +30,7 @@ return [
         'general' => [
             'all_rights_reserved' => 'Всі права захищені.',
             'are_you_sure' => 'Ви впевнені?',
-            'app_link' => 'BNF Bus V2',
+            'boilerplate_link' => 'Laravel Boilerplate',
             'continue' => 'Продовжити',
             'member_since' => 'Користувач з',
             'minutes' => 'хвилин',

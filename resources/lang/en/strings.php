@@ -31,7 +31,7 @@ return [
         'general' => [
             'all_rights_reserved' => 'All Rights Reserved.',
             'are_you_sure' => 'Are you sure you want to do this?',
-            'app_link' => 'Learing For All',
+            'boilerplate_link' => 'Laravel Boilerplate',
             'continue' => 'Continue',
             'member_since' => 'Member since',
             'minutes' => ' minutes',
