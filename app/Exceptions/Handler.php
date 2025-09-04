@@ -42,10 +42,7 @@ class Handler extends ExceptionHandler
      */
     public function report(Throwable  $exception)
     {
-        if (!config('app.debug') && $this->shouldReport($exception)) {
-            app('sneaker')->captureException($exception);
-        }
-    
+        // Remove sneaker logging for Laravel 10 compatibility
         parent::report($exception);
     }
 
