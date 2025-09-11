@@ -10,13 +10,17 @@ use Carbon\Carbon;
 class TimezoneHelper
 {
     /**
-     * @param Carbon $date
+     * @param Carbon|string $date
      * @param string $format
      *
-     * @return Carbon
+     * @return string
      */
-    public function convertToLocal(Carbon $date, $format = 'D M j G:i:s T Y') : string
+    public function convertToLocal($date, $format = 'D M j G:i:s T Y') : string
     {
+        if (is_string($date)) {
+            $date = Carbon::parse($date);
+        }
+        
         return $date->setTimezone(auth()->user()->timezone ?? config('app.timezone'))->format($format);
     }
 
