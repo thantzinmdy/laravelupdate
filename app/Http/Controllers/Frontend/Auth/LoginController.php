@@ -8,7 +8,6 @@ use App\Http\Controllers\Controller;
 use App\Events\Frontend\Auth\UserLoggedIn;
 use App\Events\Frontend\Auth\UserLoggedOut;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use LangleyFoxall\LaravelNISTPasswordRules\PasswordRules;
 
 /**
  * Class LoginController.
@@ -57,7 +56,7 @@ class LoginController extends Controller
     {
         $request->validate([
             $this->username() => 'required|string',
-            'password' => PasswordRules::login(),
+            'password' => 'required|string|min:6',
             'g-recaptcha-response' => ['required_if:captcha_status,true', 'captcha'],
         ], [
             'g-recaptcha-response.required_if' => __('validation.required', ['attribute' => 'captcha']),
