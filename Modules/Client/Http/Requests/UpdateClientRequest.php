@@ -26,7 +26,7 @@ class UpdateClientRequest extends FormRequest
             'application_number' => 'required|string|max:255',
             'owner_address' => 'nullable|string',
             'owner_phone' => 'nullable|string|max:255',
-            'agent_name' => 'required|string|max:255',
+            'agent_id' => 'required|integer|exists:' . Table::AGENT . ',id',
             'local_mark' => 'required|in:Yes,No',
             'foreign_mark' => 'required|in:Yes,No',
             'remark' => 'nullable|string',

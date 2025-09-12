@@ -29,7 +29,13 @@ class ClientTableController extends Controller
      */
     public function __invoke(ManageClientRequest $request)
     {
-        return DataTables::eloquent($this->client->getForDataTable())
+        return DataTables::eloquent($this->client->getForDataTable($request->all()))
+            ->addColumn('owner_name', function ($client) {
+                return $client->owner ? $client->owner->name : 'N/A';
+            })
+            ->addColumn('agent_name', function ($client) {
+                return $client->agent ? $client->agent->name : 'N/A';
+            })
             ->addColumn('actions', function ($client) {
                 return $client->action_buttons;
             })

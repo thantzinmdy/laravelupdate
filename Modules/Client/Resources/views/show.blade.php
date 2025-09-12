@@ -44,7 +44,7 @@
                         </tr>
                         <tr>
                             <th scope="row">Owner Name:</th>
-                            <td>{{ $client->owner_name }}</td>
+                            <td>{{ $client->owner ? $client->owner->name : 'N/A' }}</td>
                         </tr>
                         <tr>
                             <th scope="row">TM Types:</th>
@@ -68,7 +68,7 @@
                         </tr>
                         <tr>
                             <th scope="row">Agent Name:</th>
-                            <td>{{ $client->agent_name }}</td>
+                            <td>{{ $client->agent ? $client->agent->name : 'N/A' }}</td>
                         </tr>
                         <tr>
                             <th scope="row">Local Mark:</th>

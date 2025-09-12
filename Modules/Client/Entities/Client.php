@@ -28,7 +28,7 @@ class Client extends Model
         'application_number',
         'owner_address',
         'owner_phone',
-        'agent_name',
+        'agent_id',
         'local_mark',
         'foreign_mark',
         'remark',
@@ -86,6 +86,14 @@ class Client extends Model
     public function owner()
     {
         return $this->belongsTo(\Modules\Owner\Entities\Owner::class);
+    }
+
+    /**
+     * Get the agent that owns the client.
+     */
+    public function agent()
+    {
+        return $this->belongsTo(\Modules\Agent\Entities\Agent::class);
     }
 
     /**

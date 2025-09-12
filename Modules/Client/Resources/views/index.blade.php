@@ -8,6 +8,62 @@
 
 @push('after-styles')
     {{ style("https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css") }}
+    <style>
+        /* Loading overlay styles */
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1050;
+        }
+        
+        .loading-spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #007bff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .table-container {
+            position: relative;
+        }
+        
+        .btn-loading {
+            position: relative;
+        }
+        
+        .btn-loading .btn-text {
+            opacity: 0;
+        }
+        
+        .btn-loading::after {
+            content: "";
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            top: 50%;
+            left: 50%;
+            margin-left: -8px;
+            margin-top: -8px;
+            border: 2px solid transparent;
+            border-top-color: #ffffff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+    </style>
 @endpush
 
 @section('content')
@@ -25,10 +81,89 @@
             </div><!--col-->
         </div><!--row-->
 
-        <div class="row mt-4">
+        <div class="row mt-4 mb-3">
             <div class="col">
-                <div class="table-responsive">
-                    <table id="client-table" class="table table-condensed table-hover">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#searchFilters" aria-expanded="false" aria-controls="searchFilters">
+                                <i class="fas fa-search"></i> Advanced Search & Filters
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="searchFilters" class="collapse">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="start_date">Filling Date From:</label>
+                                        <input type="date" class="form-control" id="start_date" name="start_date">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="end_date">Filling Date To:</label>
+                                        <input type="date" class="form-control" id="end_date" name="end_date">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="trademark_name">Trademark Name:</label>
+                                        <input type="text" class="form-control" id="trademark_name" name="trademark_name" placeholder="Search trademark name...">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="owner_id">Owner Name:</label>
+                                        <select class="form-control" id="owner_id" name="owner_id">
+                                            <option value="">All Owners</option>
+                                            @foreach(\Modules\Owner\Entities\Owner::orderBy('name')->get() as $owner)
+                                                <option value="{{ $owner->id }}">{{ $owner->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="agent_id">Agent Name:</label>
+                                        <select class="form-control" id="agent_id" name="agent_id">
+                                            <option value="">All Agents</option>
+                                            @foreach(\Modules\Agent\Entities\Agent::orderBy('name')->get() as $agent)
+                                                <option value="{{ $agent->id }}">{{ $agent->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="form-group">
+                                        <label>&nbsp;</label><br>
+                                        <button type="button" class="btn btn-primary" id="search-btn">
+                                            <span class="btn-text">
+                                                <i class="fas fa-search"></i> Search
+                                            </span>
+                                        </button>
+                                        <button type="button" class="btn btn-secondary ml-2" id="clear-btn">
+                                            <i class="fas fa-times"></i> Clear Filters
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <div class="table-container">
+                    <div class="loading-overlay" id="table-loading">
+                        <div class="loading-spinner"></div>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="client-table" class="table table-condensed table-hover">
                         <thead>
                         <tr>
                             <th>ID</th>
@@ -38,6 +173,7 @@
                             <th>Owner Name</th>
                             <th>TM Types</th>
                             <th>Application Number</th>
+                            <th>Agent Name</th>
                             <th>Local Mark</th>
                             <th>Foreign Mark</th>
                             <th>Filling Date</th>
@@ -46,6 +182,7 @@
                         </tr>
                         </thead>
                     </table>
+                    </div>
                 </div>
             </div><!--col-->
         </div><!--row-->
@@ -115,18 +252,47 @@
             });
         }
 
+        // Initialize DataTable variable
+        var clientTable;
+
         $(function() {
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            $('#client-table').DataTable({
+            
+            clientTable = $('#client-table').DataTable({
                 serverSide: true,
+                processing: true,
                 ajax: {
                     url: '{!! route("admin.client.get") !!}',
                     type: 'post',
+                    data: function(d) {
+                        // Add search parameters to the request
+                        d.start_date = $('#start_date').val();
+                        d.end_date = $('#end_date').val();
+                        d.trademark_name = $('#trademark_name').val();
+                        d.owner_id = $('#owner_id').val();
+                        d.agent_id = $('#agent_id').val();
+                    },
+                    beforeSend: function() {
+                        // Show loading overlay
+                        $('#table-loading').show();
+                        // Add loading state to search button if it was clicked
+                        if ($('#search-btn').hasClass('btn-loading')) {
+                            $('#search-btn').prop('disabled', true);
+                        }
+                    },
+                    complete: function() {
+                        // Hide loading overlay
+                        $('#table-loading').hide();
+                        // Remove loading state from search button
+                        $('#search-btn').removeClass('btn-loading').prop('disabled', false);
+                    },
                     error: function (xhr, err) {
+                        $('#table-loading').hide();
+                        $('#search-btn').removeClass('btn-loading').prop('disabled', false);
                         if (err === 'parsererror')
                             location.reload();
                         else swal(xhr.responseJSON.message);
@@ -140,6 +306,7 @@
                     {data: 'owner_name', name: 'owner_name'},
                     {data: 'tm_types_label', name: 'tm_types', orderable: true},
                     {data: 'application_number', name: 'application_number'},
+                    {data: 'agent_name', name: 'agent_name'},
                     {data: 'local_mark', name: 'local_mark'},
                     {data: 'foreign_mark', name: 'foreign_mark'},
                     {data: 'filling_date_formatted', name: 'filling_date', orderable: true},
@@ -159,6 +326,40 @@
             
             // Initialize delete buttons on page load
             initializeDeleteButtons();
+
+            // Search button functionality
+            $('#search-btn').on('click', function() {
+                // Add loading state to button
+                $(this).addClass('btn-loading');
+                
+                // Reload the DataTable
+                clientTable.ajax.reload();
+            });
+
+            // Clear filters functionality
+            $('#clear-btn').on('click', function() {
+                // Clear all form fields
+                $('#start_date').val('');
+                $('#end_date').val('');
+                $('#trademark_name').val('');
+                $('#owner_id').val('');
+                $('#agent_id').val('');
+                
+                // Show loading state
+                $('#search-btn').addClass('btn-loading');
+                
+                // Reload the DataTable
+                clientTable.ajax.reload();
+            });
+
+            // Allow Enter key to trigger search in text inputs
+            $('#trademark_name').on('keypress', function(e) {
+                if (e.which == 13) {
+                    // Add loading state and trigger search
+                    $('#search-btn').addClass('btn-loading');
+                    clientTable.ajax.reload();
+                }
+            });
         });
     </script>
 @endpush

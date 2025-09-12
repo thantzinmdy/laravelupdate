@@ -65,6 +65,7 @@ class ClientController extends Controller
      */
     public function edit(Client $client, ManageClientRequest $request)
     {
+        $client->load(['owner', 'agent']);
         return view('client::edit')
             ->withClient($client);
     }
@@ -90,6 +91,7 @@ class ClientController extends Controller
      */
     public function show(Client $client, ShowClientRequest $request)
     {
+        $client->load(['owner', 'agent']);
         return view('client::show')->withClient($client);
     }
 

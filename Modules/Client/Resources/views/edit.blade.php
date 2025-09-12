@@ -99,9 +99,9 @@
                     </div>
 
                     <div class="form-group row">
-                        {{ html()->label('Agent Name *')->class('col-md-2 form-control-label')->for('agent_name') }}
+                        {{ html()->label('Agent *')->class('col-md-2 form-control-label')->for('agent_id') }}
                         <div class="col-md-10">
-                            {{ html()->text('agent_name')->class('form-control')->placeholder('Agent Name')->required() }}
+                            {{ html()->select('agent_id', ['' => 'Select Agent'] + \Modules\Agent\Entities\Agent::pluck('name', 'id')->toArray())->class('form-control')->required() }}
                         </div>
                     </div>
 
