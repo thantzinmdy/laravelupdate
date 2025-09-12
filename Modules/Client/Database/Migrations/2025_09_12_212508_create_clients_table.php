@@ -20,7 +20,8 @@ return new class extends Migration
             $table->string('sub_code')->nullable();
             $table->date('filling_date')->nullable();
             $table->string('trademark_name')->nullable();
-            $table->string('owner_name')->nullable();
+            $table->unsignedInteger('owner_id');
+            $table->foreign('owner_id')->references('id')->on(Table::OWNER);
             $table->string('tm_types')->nullable();
             $table->string('class')->nullable();
             $table->string('application_number')->nullable();

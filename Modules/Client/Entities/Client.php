@@ -22,7 +22,7 @@ class Client extends Model
         'sub_code',
         'filling_date',
         'trademark_name',
-        'owner_name',
+        'owner_id',
         'tm_types',
         'class',
         'application_number',
@@ -78,6 +78,14 @@ class Client extends Model
     public function getActionButtonsAttribute()
     {
             return $this->getShowButtonAttribute().$this->getEditButtonAttribute().$this->getDeleteButtonAttribute();
+    }
+
+    /**
+     * Get the owner that owns the client.
+     */
+    public function owner()
+    {
+        return $this->belongsTo(\Modules\Owner\Entities\Owner::class);
     }
 
     /**

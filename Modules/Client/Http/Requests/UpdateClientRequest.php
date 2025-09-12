@@ -4,6 +4,7 @@ namespace Modules\Client\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Modules\Client\Enums\TMTypes;
+use App\Enums\Table;
 
 class UpdateClientRequest extends FormRequest
 {
@@ -19,7 +20,7 @@ class UpdateClientRequest extends FormRequest
             'sub_code' => 'nullable|string|max:255',
             'filling_date' => 'required|date',
             'trademark_name' => 'nullable|string|max:255',
-            'owner_name' => 'required|string|max:255',
+            'owner_id' => 'required|integer|exists:' . Table::OWNER . ',id',
             'tm_types' => 'nullable|in:' . implode(',', TMTypes::getValues()),
             'class' => 'nullable|string|max:255',
             'application_number' => 'required|string|max:255',

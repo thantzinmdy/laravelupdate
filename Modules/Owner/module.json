@@ -1,13 +1,13 @@
 {
-    "name": "Client",
-    "alias": "client",
+    "name": "Owner",
+    "alias": "owner",
     "description": "",
     "keywords": [],
     "active": 1,
-    "order": 2,
+    "order": 1,
     "group": 1,
     "providers": [
-        "Modules\\Client\\Providers\\ClientServiceProvider"
+        "Modules\\Owner\\Providers\\OwnerServiceProvider"
     ],
     "aliases": {},
     "files": [

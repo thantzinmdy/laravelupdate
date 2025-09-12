@@ -9,6 +9,7 @@ class Table
     const BLOGCATEGORY = 'blogcategory';
     const BLOG_IMAGE = 'blog_image';
     const CLIENT = 'clients';
+    const OWNER = 'owners';
     
 
 }

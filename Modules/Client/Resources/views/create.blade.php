@@ -57,9 +57,9 @@
                     </div>
 
                     <div class="form-group row">
-                        {{ html()->label('Owner Name *')->class('col-md-2 form-control-label')->for('owner_name') }}
+                        {{ html()->label('Owner *')->class('col-md-2 form-control-label')->for('owner_id') }}
                         <div class="col-md-10">
-                            {{ html()->text('owner_name')->class('form-control')->placeholder('Owner Name')->required() }}
+                            {{ html()->select('owner_id', ['' => 'Select Owner'] + \Modules\Owner\Entities\Owner::pluck('name', 'id')->toArray())->class('form-control')->required() }}
                         </div>
                     </div>
 
