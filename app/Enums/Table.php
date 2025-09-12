@@ -8,6 +8,7 @@ class Table
     const BLOG = 'blog';
     const BLOGCATEGORY = 'blogcategory';
     const BLOG_IMAGE = 'blog_image';
+    const CLIENT = 'clients';
     
 
 }

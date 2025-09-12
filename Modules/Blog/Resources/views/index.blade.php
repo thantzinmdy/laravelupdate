@@ -49,7 +49,6 @@
 
 @push('after-scripts')
     {{ script("https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js") }}
-    {{ script("js/plugin/datatables/dataTables-extend.js") }}
 
     <script>
         $(function() {
@@ -80,7 +79,8 @@
                 order: [[0, "asc"]],
                 searchDelay: 500,
                 fnDrawCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                    load_plugins();
+                    // Initialize tooltips and other plugins
+                    $('[data-toggle="tooltip"]').tooltip();
                 }
             });
         });

@@ -1,0 +1,25 @@
+{
+    "name": "Thantzin/client",
+    "description": "",
+    "authors": [
+        {
+            "name": "Thant Zin",
+            "email": "thantzin18596@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\Client\\Providers\\ClientServiceProvider"
+            ],
+            "aliases": {
+                
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Client\\": ""
+        }
+    }
+}
