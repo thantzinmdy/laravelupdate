@@ -21,6 +21,7 @@
         "laravel/framework": "^10.0",
         "laravel/socialite": "^5.6",
         "laravel/ui": "^4.2",
+        "phpoffice/phpspreadsheet": "^1.15",
         "ramsey/uuid": "^4.0",
         "spatie/laravel-html": "^3.2",
         "spatie/laravel-permission": "^6.0",
