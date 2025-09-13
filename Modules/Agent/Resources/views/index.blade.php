@@ -8,6 +8,110 @@
 
 @push('after-styles')
     {{ style("https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css") }}
+    {{ style("https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css") }}
+    <style>
+        /* Responsive styles */
+        .table-container {
+            position: relative;
+            overflow-x: auto;
+        }
+        
+        @media (max-width: 768px) {
+            .dataTables_wrapper .dataTables_length,
+            .dataTables_wrapper .dataTables_filter {
+                float: none;
+                text-align: center;
+                margin-bottom: 10px;
+            }
+            
+            .dataTables_wrapper .dataTables_info,
+            .dataTables_wrapper .dataTables_paginate {
+                float: none;
+                text-align: center;
+                margin-top: 10px;
+            }
+            
+            .table-responsive {
+                border: none;
+            }
+            
+            #agent-table {
+                font-size: 12px;
+            }
+            
+            .btn-group-sm > .btn, .btn-sm {
+                padding: 0.15rem 0.3rem;
+                font-size: 0.75rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .card-title {
+                font-size: 1rem;
+            }
+            
+            #agent-table {
+                font-size: 11px;
+            }
+            
+            .col-sm-5, .col-sm-7 {
+                text-align: center;
+                margin-bottom: 10px;
+            }
+        }
+        
+        /* DataTable responsive child row styles */
+        table.dataTable.dtr-inline.collapsed > tbody > tr > td.child,
+        table.dataTable.dtr-inline.collapsed > tbody > tr > th.child,
+        table.dataTable.dtr-inline.collapsed > tbody > tr > td.dataTables_empty {
+            cursor: default !important;
+        }
+        
+        table.dataTable.dtr-inline.collapsed > tbody > tr > td.child:before,
+        table.dataTable.dtr-inline.collapsed > tbody > tr > th.child:before {
+            display: none !important;
+        }
+        
+        table.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] > td:first-child,
+        table.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] > th:first-child {
+            position: relative;
+            padding-left: 30px;
+            cursor: pointer;
+        }
+        
+        table.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] > td:first-child:before,
+        table.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] > th:first-child:before {
+            top: 50%;
+            left: 5px;
+            height: 14px;
+            width: 14px;
+            margin-top: -7px;
+            display: block;
+            position: absolute;
+            color: white;
+            border: 2px solid white;
+            border-radius: 14px;
+            box-shadow: 0 0 3px #444;
+            box-sizing: content-box;
+            text-align: center;
+            font-family: 'Courier New', Courier, monospace;
+            line-height: 14px;
+            content: '+';
+            background-color: #007bff;
+        }
+        
+        table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before,
+        table.dataTable.dtr-inline.collapsed > tbody > tr.parent > th:first-child:before {
+            content: '-';
+            background-color: #d33;
+        }
+        
+        @media (max-width: 1200px) {
+            .dtr-control {
+                background-color: #f8f9fa;
+            }
+        }
+    </style>
 @endpush
 
 @section('content')
@@ -27,19 +131,21 @@
 
         <div class="row mt-4">
             <div class="col">
-                <div class="table-responsive">
-                    <table id="agent-table" class="table table-condensed table-hover">
-                        <thead>
-                        <tr>
-                            <th>{{ __('agent::labels.backend.agent.table.id') }}</th>
-                            <th>{{ __('agent::labels.backend.agent.table.name') }}</th>
-                            <th>{{ __('agent::labels.backend.agent.table.description') }}</th>
-                            <th>{{ __('agent::labels.backend.agent.table.last_updated') }}</th>
-                            <th>{{ __('agent::labels.backend.agent.table.created') }}</th>
-                            <th>{{ __('labels.general.actions') }}</th>
-                        </tr>
-                        </thead>
-                    </table>
+                <div class="table-container">
+                    <div class="table-responsive">
+                        <table id="agent-table" class="table table-condensed table-hover">
+                            <thead>
+                            <tr>
+                                <th>{{ __('agent::labels.backend.agent.table.id') }}</th>
+                                <th>{{ __('agent::labels.backend.agent.table.name') }}</th>
+                                <th>{{ __('agent::labels.backend.agent.table.description') }}</th>
+                                <th>{{ __('agent::labels.backend.agent.table.last_updated') }}</th>
+                                <th>{{ __('agent::labels.backend.agent.table.created') }}</th>
+                                <th>{{ __('labels.general.actions') }}</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
                 </div>
             </div><!--col-->
         </div><!--row-->
@@ -49,7 +155,7 @@
 
 @push('after-scripts')
     {{ script("https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js") }}
-    {{ script("js/plugin/datatables/dataTables-extend.js") }}
+    {{ script("https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js") }}
 
     <script>
         function initializeDeleteButtons() {
@@ -118,6 +224,12 @@
             });
             $('#agent-table').DataTable({
                 serverSide: true,
+                responsive: {
+                    details: {
+                        type: 'column',
+                        target: 'tr'
+                    }
+                },
                 ajax: {
                     url: '{!! route("admin.agent.get") !!}',
                     type: 'post',
@@ -128,23 +240,23 @@
                     }
                 },
                 columns: [
-                    {data: 'id', name: 'id'},
-                    {data: 'name', name: 'name'},
-                    {data: 'description', name: 'description'},
-                    {data: 'updated_at', name: 'updated_at'},
-                    {data: 'created_at', name: 'created_at'},
-                    {data: 'actions', name: 'actions', searchable: false, sortable: false}
+                    {data: 'id', name: 'id', responsivePriority: 2},
+                    {data: 'name', name: 'name', responsivePriority: 1},
+                    {data: 'description', name: 'description', responsivePriority: 4},
+                    {data: 'updated_at', name: 'updated_at', responsivePriority: 5},
+                    {data: 'created_at', name: 'created_at', responsivePriority: 6},
+                    {data: 'actions', name: 'actions', searchable: false, sortable: false, responsivePriority: 1}
                 ],
                 order: [[0, "asc"]],
                 searchDelay: 500,
+                autoWidth: false,
+                scrollX: false,
                 fnDrawCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                     // Initialize tooltips
                     $('[data-toggle="tooltip"]').tooltip();
                     
                     // Initialize delete buttons for newly loaded DataTable content
                     initializeDeleteButtons();
-                    
-                    load_plugins();
                 }
             });
         });

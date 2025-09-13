@@ -8,6 +8,7 @@
 
 @push('after-styles')
     {{ style("https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css") }}
+    {{ style("https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css") }}
     <style>
         /* Loading overlay styles */
         .loading-overlay {
@@ -39,6 +40,7 @@
         
         .table-container {
             position: relative;
+            overflow-x: auto;
         }
         
         .btn-loading {
@@ -62,6 +64,104 @@
             border-top-color: #ffffff;
             border-radius: 50%;
             animation: spin 1s linear infinite;
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .dataTables_wrapper .dataTables_length,
+            .dataTables_wrapper .dataTables_filter {
+                float: none;
+                text-align: center;
+                margin-bottom: 10px;
+            }
+            
+            .dataTables_wrapper .dataTables_info,
+            .dataTables_wrapper .dataTables_paginate {
+                float: none;
+                text-align: center;
+                margin-top: 10px;
+            }
+            
+            .table-responsive {
+                border: none;
+            }
+            
+            #client-table {
+                font-size: 12px;
+            }
+            
+            .btn-group-sm > .btn, .btn-sm {
+                padding: 0.15rem 0.3rem;
+                font-size: 0.75rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .card-title {
+                font-size: 1rem;
+            }
+            
+            #client-table {
+                font-size: 11px;
+            }
+            
+            .col-sm-5, .col-sm-7 {
+                text-align: center;
+                margin-bottom: 10px;
+            }
+        }
+        
+        /* DataTable responsive child row styles */
+        table.dataTable.dtr-inline.collapsed > tbody > tr > td.child,
+        table.dataTable.dtr-inline.collapsed > tbody > tr > th.child,
+        table.dataTable.dtr-inline.collapsed > tbody > tr > td.dataTables_empty {
+            cursor: default !important;
+        }
+        
+        table.dataTable.dtr-inline.collapsed > tbody > tr > td.child:before,
+        table.dataTable.dtr-inline.collapsed > tbody > tr > th.child:before {
+            display: none !important;
+        }
+        
+        table.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] > td:first-child,
+        table.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] > th:first-child {
+            position: relative;
+            padding-left: 30px;
+            cursor: pointer;
+        }
+        
+        table.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] > td:first-child:before,
+        table.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] > th:first-child:before {
+            top: 50%;
+            left: 5px;
+            height: 14px;
+            width: 14px;
+            margin-top: -7px;
+            display: block;
+            position: absolute;
+            color: white;
+            border: 2px solid white;
+            border-radius: 14px;
+            box-shadow: 0 0 3px #444;
+            box-sizing: content-box;
+            text-align: center;
+            font-family: 'Courier New', Courier, monospace;
+            line-height: 14px;
+            content: '+';
+            background-color: #007bff;
+        }
+        
+        table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before,
+        table.dataTable.dtr-inline.collapsed > tbody > tr.parent > th:first-child:before {
+            content: '-';
+            background-color: #d33;
+        }
+        
+        /* Responsive priority for columns */
+        @media (max-width: 1200px) {
+            .dtr-control {
+                background-color: #f8f9fa;
+            }
         }
     </style>
 @endpush
@@ -192,6 +292,7 @@
 
 @push('after-scripts')
     {{ script("https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js") }}
+    {{ script("https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js") }}
 
     <script>
         function initializeDeleteButtons() {
@@ -265,6 +366,12 @@
             clientTable = $('#client-table').DataTable({
                 serverSide: true,
                 processing: true,
+                responsive: {
+                    details: {
+                        type: 'column',
+                        target: 'tr'
+                    }
+                },
                 ajax: {
                     url: '{!! route("admin.client.get") !!}',
                     type: 'post',
@@ -299,22 +406,24 @@
                     }
                 },
                 columns: [
-                    {data: 'id', name: 'id'},
-                    {data: 'main_code', name: 'main_code'},
-                    {data: 'sub_code', name: 'sub_code'},
-                    {data: 'trademark_name', name: 'trademark_name'},
-                    {data: 'owner_name', name: 'owner_name'},
-                    {data: 'tm_types_label', name: 'tm_types', orderable: true},
-                    {data: 'application_number', name: 'application_number'},
-                    {data: 'agent_name', name: 'agent_name'},
-                    {data: 'local_mark', name: 'local_mark'},
-                    {data: 'foreign_mark', name: 'foreign_mark'},
-                    {data: 'filling_date_formatted', name: 'filling_date', orderable: true},
-                    {data: 'updated_at', name: 'updated_at'},
-                    {data: 'actions', name: 'actions', searchable: false, sortable: false}
+                    {data: 'id', name: 'id', responsivePriority: 2},
+                    {data: 'main_code', name: 'main_code', responsivePriority: 10003},
+                    {data: 'sub_code', name: 'sub_code', responsivePriority: 10004},
+                    {data: 'trademark_name', name: 'trademark_name', responsivePriority: 1},
+                    {data: 'owner_name', name: 'owner_name', responsivePriority: 3},
+                    {data: 'tm_types_label', name: 'tm_types', orderable: true, responsivePriority: 10005},
+                    {data: 'application_number', name: 'application_number', responsivePriority: 4},
+                    {data: 'agent_name', name: 'agent_name', responsivePriority: 10006},
+                    {data: 'local_mark', name: 'local_mark', responsivePriority: 10007},
+                    {data: 'foreign_mark', name: 'foreign_mark', responsivePriority: 10008},
+                    {data: 'filling_date_formatted', name: 'filling_date', orderable: true, responsivePriority: 5},
+                    {data: 'updated_at', name: 'updated_at', responsivePriority: 10009},
+                    {data: 'actions', name: 'actions', searchable: false, sortable: false, responsivePriority: 1}
                 ],
                 order: [[0, "asc"]],
                 searchDelay: 500,
+                autoWidth: false,
+                scrollX: false,
                 fnDrawCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                     // Initialize tooltips
                     $('[data-toggle="tooltip"]').tooltip();
