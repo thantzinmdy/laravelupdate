@@ -139,19 +139,19 @@
                                 <div class="text-center">
                                     <i class="fas fa-map-marker-alt text-primary mb-3" style="font-size: 2rem;"></i>
                                     <h5>Office Location</h5>
-                                    <p class="text-muted">Yangon, Myanmar<br>Myanmar</p>
+                                    <p class="text-muted">{{ config('appsetting.basic.address') }}<br>Myanmar</p>
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-12 mb-4 contact-info">
                                 <div class="text-center">
                                     <i class="fas fa-envelope text-primary mb-3" style="font-size: 2rem;"></i>
                                     <h5>Email Us</h5>
-                                    <p class="text-muted">info@kizlaw.com<br>consultation@kizlaw.com</p>
+                                    <p class="text-muted">{{ config('appsetting.basic.email') }}<br>{{ config('appsetting.basic.phone') }}</p>
                                 </div>
                             </div>
                         </div>
                         <div class="text-center mt-4">
-                            <a href="{{route('frontend.contact')}}" class="btn btn-primary btn-lg">Send Message</a>
+                            <!-- <a href="{{route('frontend.contact')}}" class="btn btn-primary btn-lg">Send Message</a> -->
                         </div>
                     </div>
                 </div>

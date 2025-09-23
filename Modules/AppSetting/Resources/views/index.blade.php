@@ -110,13 +110,6 @@
                             </div>
 
                             <div class="form-group row form-md-line-input">
-                                {{ html()->label(__('appsetting::labels.backend.appsetting.basic.qr_prefix'))->class('col-md-3 form-control-label')->for('qr_prefix') }}
-                                <div class="col-md-9">
-                                    {{ html()->text('qr_prefix')->value(config('appsetting.basic.qr_prefix'))->class('form-control')->id('qr_prefix') }}
-                                </div>
-                            </div>
-
-                            <div class="form-group row form-md-line-input">
                                 {{ html()->label(__('appsetting::labels.backend.appsetting.basic.phone_number'))->class('col-md-3 form-control-label')->for('phone_number') }}
                                 <div class="col-md-9">
                                     {{ html()->text('app_phone')->value(config('appsetting.basic.phone'))->class('form-control')->id('app_phone') }}
@@ -127,13 +120,6 @@
                                 {{ html()->label(__('appsetting::labels.backend.appsetting.basic.address'))->class('col-md-3 form-control-label')->for('address') }}
                                 <div class="col-md-9">
                                     {{ html()->textarea('app_address')->value(config('appsetting.basic.address'))->class('form-control')->id('app_address') }}
-                                </div>
-                            </div>
-
-                             <div class="form-group row form-md-line-input">
-                                {{ html()->label(__('appsetting::labels.backend.appsetting.basic.doller_rate'))->class('col-md-3 form-control-label')->for('doller_rate') }}
-                                <div class="col-md-9">
-                                    {{ html()->text('app_dollar_rate')->value(config('appsetting.basic.app_dollar_rate'))->class('form-control')->id('app_dollar_rate') }}
                                 </div>
                             </div>
 

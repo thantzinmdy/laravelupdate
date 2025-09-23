@@ -28,21 +28,21 @@
 
             <div class="col-lg-4 col-md-6 mb-4">
                 <h6 class="text-uppercase mb-3">Contact Info</h6>
-                @if(env('APP_ADDRESS'))
-                    <p class="mb-2"><i class="fas fa-map-marker-alt me-2"></i>{{ env('APP_ADDRESS') }}</p>
+                @if(config('appsetting.basic.address'))
+                    <p class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> {{ config('appsetting.basic.address') }}</p>
                 @endif
-                @if(env('APP_PHONE'))
-                    <p class="mb-2"><i class="fas fa-phone me-2"></i>{{ env('APP_PHONE') }}</p>
+                @if(config('appsetting.basic.phone'))
+                    <p class="mb-2"><i class="fas fa-phone me-2"></i> {{ config('appsetting.basic.phone') }}</p>
                 @endif
-                @if(env('APP_EMAIL'))
-                    <p class="mb-2"><i class="fas fa-envelope me-2"></i>{{ env('APP_EMAIL') }}</p>
+                @if(config('appsetting.basic.email'))
+                    <p class="mb-2"><i class="fas fa-envelope me-2"></i> {{ config('appsetting.basic.email') }}</p>
                 @endif
                 <div class="mt-3">
-                    @if(env('FACEBOOK'))
-                        <a href="{{ env('FACEBOOK') }}" class="text-light me-3" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    @if(config('appsetting.basic.facebook'))
+                        <a href="{{ config('appsetting.basic.facebook') }}" class="text-light me-3" target="_blank"><i class="fab fa-facebook-f"></i></a>
                     @endif
-                    @if(env('YOUTUBE'))
-                        <a href="{{ env('YOUTUBE') }}" class="text-light me-3" target="_blank"><i class="fab fa-youtube"></i></a>
+                    @if(config('appsetting.basic.youtubedemo'))
+                        <a href="{{ config('appsetting.basic.youtubedemo') }}" class="text-light me-3" target="_blank"><i class="fab fa-youtube"></i></a>
                     @endif
                     @if(env('GOOGLEPLUS'))
                         <a href="{{ env('GOOGLEPLUS') }}" class="text-light me-3" target="_blank"><i class="fab fa-google-plus-g"></i></a>
